@@ -6,12 +6,30 @@
 #include "UObject/NoExportTypes.h"
 #include "InventorySystem.generated.h"
 
+class IAbilityInterface;
+
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class TOXICREVENANT_API UInventorySystem : public UObject
 {
 	GENERATED_BODY()
 	
+public:
+    UFUNCTION()
+    void AddAbility(TScriptInterface<IAbilityInterface> Ability);
+
+    UFUNCTION()
+    TScriptInterface<IAbilityInterface> GetEquippedAbility() const;
+
+    UFUNCTION()
+    void EquipAbility(TScriptInterface<IAbilityInterface> Ability);
+
+private:
+    UPROPERTY()
+    TArray<TScriptInterface<IAbilityInterface>> Abilities;
+
+    UPROPERTY()
+    TScriptInterface<IAbilityInterface> Equipped;
 };

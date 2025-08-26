@@ -14,6 +14,7 @@ class TOXICREVENANT_API AEnemySpawner : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AEnemySpawner();
+	void SpawnWave();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,4 +24,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TArray<TSubclassOf<AActor>> EnemyTypes;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	int32 EnemiesPerWave = 5;
+
+	void SpawnEnemyOfType(TSubclassOf<AActor> EnemyClass);
 };

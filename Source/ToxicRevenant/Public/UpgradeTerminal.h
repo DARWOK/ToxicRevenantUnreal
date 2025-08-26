@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "UpgradeTerminal.generated.h"
 
+class USampleCurrency;
+class IAbilityInterface;
+
 UCLASS()
 class TOXICREVENANT_API AUpgradeTerminal : public AActor
 {
@@ -14,6 +17,8 @@ class TOXICREVENANT_API AUpgradeTerminal : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AUpgradeTerminal();
+	void AttemptUpgrade(TScriptInterface<IAbilityInterface> Ability, USampleCurrency* Currency, int32 Cost);
+
 
 protected:
 	// Called when the game starts or when spawned

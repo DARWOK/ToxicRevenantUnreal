@@ -7,7 +7,7 @@
 #include "PlayerStateInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, Blueprintable)
 class UPlayerStateInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -22,4 +22,7 @@ class TOXICREVENANT_API IPlayerStateInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	virtual void EnterState(class APlayerCharacter* Player) = 0;
+	virtual void ExitState(class APlayerCharacter* Player) = 0;
+	virtual void UpdateState(class APlayerCharacter* Player, float DeltaTime) = 0;
 };

@@ -6,6 +6,10 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+class USampleCurrency;
+class IPlayerStateInterface;
+class IAbilityInterface;
+
 UCLASS()
 class TOXICREVENANT_API APlayerCharacter : public ACharacter
 {
@@ -14,6 +18,23 @@ class TOXICREVENANT_API APlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
+
+	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+
+	void UseEquippedAbility();
+	void ChangeState(TScriptInterface<IPlayerStateInterface> NewState);
+	void EquipAbility(TScriptInterface<IAbilityInterface> Ability);
+
+private:
+	UPROPERTY()
+	TScriptInterface<IPlayerStateInterface> CurrentState;
+
+	UPROPERTY()
+	TScriptInterface<IAbilityInterface> EquippedAbility;
+
+	UPROPERTY()
+	USampleCurrency* Currency;
 
 protected:
 	// Called when the game starts or when spawned
