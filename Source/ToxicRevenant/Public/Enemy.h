@@ -14,27 +14,24 @@ class TOXICREVENANT_API AEnemy : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	AEnemy();
-	void ApplyEffect(UStatusEffect* Effect);
-	void TakeDamage(float Amount);
+    // Daño “simple” utilitario (no oculta a APawn/ACharacter)
+    UFUNCTION(BlueprintCallable)
+    void TakeDamageSimple(float Amount);
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	//virtual void Tick(float DeltaTime) override;
+    // Override correcto para que ApplyDamage/ApplyRadialDamage llamen aquí
+    virtual float TakeDamage(
+        float Damage,
+        struct FDamageEvent const& DamageEvent,
+        AController* EventInstigator,
+        AActor* DamageCauser
+    ) override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+    // --- Atributos mínimos usados en el .cpp ---
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+    int32 Health = 100;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+    float ToxinResistance = 0.f; // 0..100 (%)
 
-	UPROPERTY()
-	float Health = 100.0f;
-
-	UPROPERTY()
-	TArray<UStatusEffect*> ActiveEffects;
-
+    // Si tienes más propiedades/métodos, déjalos aquí
 };

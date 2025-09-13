@@ -1,34 +1,24 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Enemy.h"
+#include "GameFramework/Controller.h"
+#include "Kismet/GameplayStatics.h"
 
-// Sets default values
-AEnemy::AEnemy()
+void AEnemy::TakeDamageSimple(float Amount)
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+    Health -= FMath::RoundToInt(Amount);
+    if (Health <= 0)
+    {
+        // Aquí podrías notificar muerte / return-to-pool si ya lo tienes
+        Destroy(); // AActor::Destroy (válido para ACharacter)
+    }
 }
 
-// Called when the game starts or when spawned
-void AEnemy::BeginPlay()
+float AEnemy::TakeDamage(
+    float Damage,
+    const FDamageEvent& DamageEvent,
+    AController* EventInstigator,
+    AActor* DamageCauser)
 {
-	Super::BeginPlay();
-	
+    // Enlaza el flujo “oficial” de Unreal con tu lógica simple
+    TakeDamageSimple(Damage);
+    return Damage; // Devuelve cuánto “consumiste”; ajusta si quieres
 }
-
-// Called every frame
-void AEnemy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
